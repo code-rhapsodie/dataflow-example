@@ -16,6 +16,9 @@ class FileWriter implements WriterInterface
 
     public function prepare()
     {
+        if (null === $this->path) {
+            throw new \Exception('Define the destination file name before use');
+        }
         if (!$this->fh = fopen($this->path, 'w')) {
             throw new \Exception("Unable to open in write mode the output file.");
         }
