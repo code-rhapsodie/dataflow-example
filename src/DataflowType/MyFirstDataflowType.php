@@ -7,6 +7,7 @@ use CodeRhapsodie\DataflowBundle\DataflowType\DataflowBuilder;
 use CodeRhapsodie\DataflowBundle\DataflowType\Writer\PortWriterAdapter;
 use CodeRhapsodie\DataflowExemple\Reader\FileReader;
 use CodeRhapsodie\DataflowExemple\Writer\FileWriter;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MyFirstDataflowType extends AbstractDataflowType
 {
@@ -22,14 +23,20 @@ class MyFirstDataflowType extends AbstractDataflowType
 
     protected function buildDataflow(DataflowBuilder $builder, array $options): void
     {
-        $this->myReader->setOptions($options);
+        $this->myWriter->setDestinationFilePath($options['to-file']);
 
-        $builder->setReader(new \Port\Reader\IteratorReader($this->myReader))
+        $builder->setReader($this->myReader->read($options['from-file']))
             ->addStep(function ($data) use ($options) {
                 // TODO : Write your code here...
                 return $data;
             })
-            ->addWriter(new PortWriterAdapter($this->myWriter));
+            ->addWriter($this->myWriter);
+    }
+
+    protected function configureOptions(OptionsResolver $optionsResolver): void
+    {
+        $optionsResolver->setDefaults(['to-file'=>'/tmp/dataflow.csv', 'from-file'=>null]);
+        $optionsResolver->setRequired('from-file');
     }
 
     public function getLabel(): string
