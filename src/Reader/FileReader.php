@@ -1,7 +1,8 @@
 <?php
 
-namespace CodeRhapsodie\DataflowExemple\Reader;
+declare(strict_types=1);
 
+namespace CodeRhapsodie\DataflowExemple\Reader;
 
 class FileReader
 {
@@ -12,11 +13,11 @@ class FileReader
         }
 
         if (!$fh = fopen($filename, 'r')) {
-            throw new \Exception("Unable to open file '" . $filename . "' for read.");
+            throw new \Exception("Unable to open file '".$filename."' for read.");
         }
 
         while (false !== ($read = fgets($fh))) {
-            yield explode("|", trim($read));
+            yield explode('|', trim($read));
         }
     }
 }

@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CodeRhapsodie\DataflowExemple\DataflowType;
 
 use CodeRhapsodie\DataflowBundle\DataflowType\AbstractDataflowType;
 use CodeRhapsodie\DataflowBundle\DataflowType\DataflowBuilder;
-use CodeRhapsodie\DataflowBundle\DataflowType\Writer\PortWriterAdapter;
 use CodeRhapsodie\DataflowExemple\Reader\FileReader;
 use CodeRhapsodie\DataflowExemple\Writer\FileWriter;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -35,7 +36,7 @@ class MyFirstDataflowType extends AbstractDataflowType
 
     protected function configureOptions(OptionsResolver $optionsResolver): void
     {
-        $optionsResolver->setDefaults(['to-file'=>'/tmp/dataflow.csv', 'from-file'=>null]);
+        $optionsResolver->setDefaults(['to-file' => '/tmp/dataflow.csv', 'from-file' => null]);
         $optionsResolver->setRequired('from-file');
     }
 
