@@ -26,12 +26,14 @@ class MyFirstDataflowType extends AbstractDataflowType
     {
         $this->myWriter->setDestinationFilePath($options['to-file']);
 
-        $builder->setReader($this->myReader->read($options['from-file']))
+        $builder
+            ->setReader($this->myReader->read($options['from-file']))
             ->addStep(function ($data) use ($options) {
                 // TODO : Write your code here...
                 return $data;
             })
-            ->addWriter($this->myWriter);
+            ->addWriter($this->myWriter)
+        ;
     }
 
     protected function configureOptions(OptionsResolver $optionsResolver): void
